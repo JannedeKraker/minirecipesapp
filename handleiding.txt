@@ -367,6 +367,44 @@ Houd er rekening mee dat je deze klasse in hetzelfde package moet plaatsen als j
 
  Je kunt nu naar bijvoorbeeld http://localhost:8080/api/v1/recipes/52 gaan in je browser om het recept met ID 1 op te halen (vervang 52 door het gewenste ID).)
  --------------------------------------------------------------------------------------------------------------------------
+ 14) Maak een endpoint waarmee je een receptennaam kunt opslaan via Postman of HTTPie
+
+ - die heb ik al gemaakt, dat is deze, die staat in de RecipeController:
+
+  @PostMapping
+     public ResponseEntity<Recipe> createRecipe(@RequestBody Recipe recipe) {
+         Recipe savedRecipe = recipeRepository.save(recipe);
+         return ResponseEntity.ok(savedRecipe);
+     }
+
+ (In dit voorbeeld voegen we een nieuwe methode createRecipe toe die wordt aangeroepen wanneer een POST-verzoek wordt gedaan naar het pad "/recipes". Het verzoeklichaam (request body) moet een JSON-object bevatten met de eigenschappen van het recept dat je wilt opslaan, bijvoorbeeld:
+
+ {
+     "title": "New Recipe"
+ }
+
+ Met behulp van Postman of HTTPie kun je een POST-verzoek doen naar http://localhost:8080/api/v1/recipes en het bovenstaande JSON-object als verzoeklichaam verzenden. Het recept wordt opgeslagen in de database en het opgeslagen recept wordt als respons teruggestuurd.
+
+ Houd er rekening mee dat dit een eenvoudige implementatie is om je op weg te helpen. In een productieomgeving wil je mogelijk meer validatie en gegevensverwerking toevoegen aan het opslaan van recepten.
+ )
+
+ - open HTTPie
+ - zet bij Post: http://localhost:8080/api/v1/recipes
+ - zet bij Body:
+ {
+     "title": "Strawberry Cheesecake with Bastogne"
+ }
+ - klik op Send
+
+ om te kijken of het werkt:
+ - kijk op http://localhost:8080/api/v1/recipes/ (id nummer die te zien is bij HTTPie)
+ - kijk op http://localhost:8080/api/v1/recipes dan zie je ze allemaal staan
+ - ga naar pgAdmin
+ - Servers-> PostgresSQL->databases-> recipes-> Schemas-> public -> Tables -> recipe-> rechtermuisknop -> View/Edit Data -> All Rows
+ --------------------------------------------------------------------------------------------------------------------------
+ 15) Maak nu een vite/React/JS+SWC-project voor de front-end (dit mag in je Java-
+ folder; je mag ook de Java-folder en de React-folder op gelijk niveau zetten, maar dat
+ levert in mijn ervaring meer gepruts op tot het goed werkt)
 
 
 
