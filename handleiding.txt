@@ -1,0 +1,103 @@
+1. Java Backend met Spring Boot:
+
+   Open IntelliJ IDEA en maak een nieuw Spring Boot-project met behulp van Spring Initializer.
+   Selecteer de benodigde afhankelijkheden, zoals Spring Web, Spring Data JPA en PostgreSQL    Driver.
+    Configureer de database-instellingen in het application.properties-bestand.
+    Maak Java-klassen voor je entiteiten en repositories met behulp van JPA Spring Data.
+
+2. Frontend met React, JavaScript, en Tailwind:
+
+    Open Visual Studio Code en maak een nieuw projectmap voor je frontend.
+    Gebruik de opdracht npm create vite@latest om een nieuw Vite-project te maken.
+    Ga naar de projectmap en voer npm install uit om alle afhankelijkheden te installeren.
+    Gebruik npm run dev om de ontwikkelingsserver te starten.
+
+3. React Componenten, Props en Router:
+
+    Maak React-componenten in de src-map van je Vite-project.
+    Gebruik JSX om de UI van je componenten te definiëren.
+    Definieer props om gegevens naar componenten door te geven.
+    Gebruik een router zoals react-router om navigatie in je applicatie mogelijk te maken.
+
+4. Communicatie met de Backend:
+
+    Gebruik de fetch()-functie om HTTP-verzoeken vanuit je React-componenten naar de Java-backend te sturen.
+    Definieer eindpunten op de Java-backend met behulp van Spring Web Controllers om de verzoeken te verwerken.
+    Implementeer de logica om gegevens tussen de frontend en backend uit te wisselen, bijvoorbeeld met JSON.
+
+5. Databasebeheer:
+
+    Gebruik pgAdmin om je PostgreSQL-database te beheren. Maak tabellen voor je applicatie-entiteiten.
+    Configureer de databaseverbinding in de backend met de juiste URL, gebruikersnaam en wachtwoord.
+
+6. Version Control met GitHub:
+
+    Maak een GitHub-repository voor je project.
+    Initialiseer Git in je projectmappen en voeg alle bestanden toe aan de repository.
+    Maak commits en push regelmatig naar GitHub om je werk op te slaan en samen te werken.
+
+Dit is een algemene roadmap voor het opzetten van je webapplicatie met de genoemde technologieën. Onthoud dat elk van deze stappen gedetailleerde configuraties en implementaties vereist. Raadpleeg de officiële documentatie van elke technologie voor diepgaandere informatie en voorbeelden.
+
+
+
+
+
+
+
+1. Java Backend met Spring Boot:
+1) Maak een Spring Boot project aan met de normale dependencies
+
+ga naar: https://start.spring.io/ (Dat is de website met spring initializer)
+
+--------------------------------------------------------------------------------------------------------------------------
+project: Maven
+language: JAVA
+SpringBoot: 3.1.3
+
+Project metadata
+Group: com.jannedekraker
+Artifact: minirecipesapp 	(volgens mij mogen hier geen hoofdletters in en in de naam 				 wel, waarom weer ik nog niet)
+Name: miniRecipesApp
+Description: excersize mini app
+packaging: JAR			(geen idee wat dat is en waarom)
+JAVA: 17
+
+Dependencies:
+- eventueel Lombok 		(doe ik nu niet, die maakt zelf getters en setters. Java 					 annotation library which helps to reduce boilerplate code.)
+- Spring Web 			(Build web, including RESTful, applications using Spring 					MVC. Uses Apache Tomcat as the default embedded 					container. wat dit betekend weet ik nog niet.)
+- Spring Data jpa		(Persist data in SQL stores with Java Persistence API using 				Spring Data and Hibernate. wat dit betekend weet ik nog 				niet.)
+- PostgreSQL Driver		( A JDBC and R2DBC driver that allows Java programs to 					 connect to a PostgreSQL database using standard, database 				independent Java code. wat dit betekend weet ik nog niet.)
+klik --> Generate
+--------------------------------------------------------------------------------------------------------------------------
+
+2) pak het uit, laad het in IntelliJ, en maak er een GitHub repository van.
+
+- bestand openen
+- unzip/ extract to
+C:\Users\janne.dekraker\Documents\it project janne\Itvitae\opdrachtenfase3
+- IntelliJ openen
+- open map: C:\Users\janne.dekraker\Documents\it project janne\Itvitae\opdrachtenfase3\minirecipesapp
+- ga naar VSC - share project on github
+- hij staat standaard op private, dat wil ik nu niet omdat wubbo dan kan zien wat ik heb gedaan. dus ik haal het vinkje weg bij private.
+- Repository naam staat er automatisch,
+- description kopieer ik van initializer.
+- klik --> ok
+--------------------------------------------------------------------------------------------------------------------------
+
+3) Maak een database (bv "recipes") met pgAdmin
+
+- open pgAdmin
+- enter wachtwoord (db)
+- klik op servers
+- klik op postgresSQL
+- rechtermuisknop databases --> create Database
+- Database recipes
+- owner postgres
+- save
+--------------------------------------------------------------------------------------------------------------------------
+
+4) Zorg dat de application.properties de juiste waarden krijgt
+
+2. Frontend met React, JavaScript, en Tailwind:
+tailwind installeren:
+https://tailwindcss.com/docs/guides/vite
