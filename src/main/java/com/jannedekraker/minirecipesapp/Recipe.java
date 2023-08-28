@@ -11,18 +11,19 @@ public class Recipe {
     @GeneratedValue
     private long id;
 
-    private String name;
+    private String title;
 
     public long getId() {
         return id;
     }
-// not a setId because it is an @GeneratedValue
 
-    public String getName() {
-        return name;
+
+    public String getTitle() {
+        return title;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setTitle(String title) {
+        this.title = title;
     }
 }
+
