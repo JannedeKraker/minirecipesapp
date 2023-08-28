@@ -81,7 +81,8 @@ C:\Users\janne.dekraker\Documents\it project janne\Itvitae\opdrachtenfase3
 - hij staat standaard op private, dat wil ik nu niet omdat wubbo dan kan zien wat ik heb gedaan. dus ik haal het vinkje weg bij private.
 - Repository naam staat er automatisch,
 - description kopieer ik van initializer.
-- klik --> ok
+- bij de add files for initial commit unvink de application.properties.
+- klik --> commit
 --------------------------------------------------------------------------------------------------------------------------
 
 3) Maak een database (bv "recipes") met pgAdmin
@@ -96,7 +97,26 @@ C:\Users\janne.dekraker\Documents\it project janne\Itvitae\opdrachtenfase3
 - save
 --------------------------------------------------------------------------------------------------------------------------
 
-4) Zorg dat de application.properties de juiste waarden krijgt
+4) Zorg dat de application.properties de juiste waarden krijgt.
+
+- ga naar InteliJ
+- ga naar minirecepesapp->src->main->resources->application.properties
+- zet dit er in (gekregen van Alexander, geen idee waar hij dit vandaan heeft, ik vermoed dat dit de connectie met postgres voor elkaar krijgt):
+
+spring.datasource.url=jdbc:postgresql://localhost:5432/{*** vul hier de naam van je app in
+spring.datasource.username=postgres
+spring.datasource.password=  {*** Vul hier je wachtwoord in !!***}
+spring.jpa.show-sql=true
+spring.jpa.properties.hibernate.dialect = org.hibernate.dialect.PostgreSQLDialect
+spring.jpa.hibernate.ddl-auto = update
+
+-vul het wachtwoord in.
+-vul de naam van je app in, in dit geval: minirecipeapp
+- commit --> klik met je rechtermuisknop op application.properties en add to . gitignore (zo komt je wachtwoord van je database niet online te staan)
+- vink changes aan
+- zet bij commit message: added application.properties to .gitignore
+- commit
+
 
 2. Frontend met React, JavaScript, en Tailwind:
 tailwind installeren:
