@@ -103,7 +103,7 @@ C:\Users\janne.dekraker\Documents\it project janne\Itvitae\opdrachtenfase3
 - ga naar minirecepesapp->src->main->resources->application.properties
 - zet dit er in (gekregen van Alexander, geen idee waar hij dit vandaan heeft, ik vermoed dat dit de connectie met postgres voor elkaar krijgt):
 
-spring.datasource.url=jdbc:postgresql://localhost:5432/{*** vul hier de naam van je app in
+spring.datasource.url=jdbc:postgresql://localhost:5432/{*** vul hier de naam van je database in***}
 spring.datasource.username=postgres
 spring.datasource.password=  {*** Vul hier je wachtwoord in !!***}
 spring.jpa.show-sql=true
@@ -111,7 +111,7 @@ spring.jpa.properties.hibernate.dialect = org.hibernate.dialect.PostgreSQLDialec
 spring.jpa.hibernate.ddl-auto = update
 
 -vul het wachtwoord in.
--vul de naam van je app in, in dit geval: minirecipeapp
+-vul de naam van je database in, in dit geval: recipes
 - commit --> klik met je rechtermuisknop op application.properties en add to . gitignore (zo komt je wachtwoord van je database niet online te staan)
 - vink changes aan
 - zet bij commit message: added application.properties to .gitignore
@@ -207,7 +207,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/recipes")
+@RequestMapping("api/v1/recipes")
 public class RecipeController {
 
     private final RecipeRepository recipeRepository;
@@ -264,6 +264,36 @@ public class RecipeController {
     @RequestBody wordt gebruikt om het verzoeklichaam naar een object te binden.
 
 Houd er rekening mee dat dit slechts een basisvoorbeeld is en je kunt dit aanpassen en uitbreiden op basis van de vereisten van je applicatie.)
+--------------------------------------------------------------------------------------------------------------------------
+
+8) Geef de RecipeController een Get-endpoint, dat nu gewoon "hello recipes!"
+teruggeeft
+
+- zet dit bij de getmappings
+
+  @GetMapping("/hello")
+    public ResponseEntity<String> helloRecipes() {
+        return ResponseEntity.ok("hello recipes!");
+    }
+--------------------------------------------------------------------------------------------------------------------------
+
+9) Run het project en test uit in de browser of je het endpoint terugkrijgt
+
+- ga naar MiniRecipesAppApplication in IntelliJ
+- en druk op runnen
+- open webbrowser http://localhost:8080/api/v1/recipes/hello
+
+(in je recipeController kan je zien wat er na http://localhost:8080/ moet komen te staan. achter @RequestMapping staat het eerste gedeelte:("api/v1/recipes").
+en achter @GetMapping staat het tweede gedeelte("/hello"))
+
+
+
+--------------------------------------------------------------------------------------------------------------------------
+
+10) Maak een seeder voor je database, die er recepten in aanbrengt als hij leeg is
+
+
+
 
 
 2. Frontend met React, JavaScript, en Tailwind:
