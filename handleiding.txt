@@ -193,6 +193,87 @@ public interface RecipeRepository extends JpaRepository<Recipe, Long> {
 Je kunt ook aangepaste query-methoden toevoegen aan de repository-interface als je specifieke zoekoperaties nodig hebt die niet worden gedekt door de standaard CRUD-operaties.)
 --------------------------------------------------------------------------------------------------------------------------
 7) Maak een RecipeController
+- ga in IntelliJ naar minirecipesapp\src\main\java\com\jannedekraker\minirecipesapp\MiniRecipesAppApplication.java
+- rechtermuisknop new file java class
+- RecipeController
+- add to git
+- typ dit
+package com.jannedekraker.minirecipesapp;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RestController
+@RequestMapping("/recipes")
+public class RecipeController {
+
+    private final RecipeRepository recipeRepository;
+
+    @Autowired
+    public RecipeController(RecipeRepository recipeRepository) {
+        this.recipeRepository = recipeRepository;
+    }
+
+    @GetMapping
+    public ResponseEntity<List<Recipe>> getAllRecipes() {
+        List<Recipe> recipes = recipeRepository.findAll();
+        return ResponseEntity.ok(recipes);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Recipe> getRecipeById(@PathVariable Long id) {
+        Recipe recipe = recipeRepository.findById(id).orElse(null);
+        if (recipe != null) {
+            return ResponseEntity.ok(recipe);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @PostMapping
+    public ResponseEntity<Recipe> createRecipe(@RequestBody Recipe recipe) {
+        Recipe savedRecipe = recipeRepository.save(recipe);
+        return ResponseEntity.ok(savedRecipe);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Recipe> updateRecipe(@PathVariable Long id, @RequestBody Recipe recipe) {
+        if (recipeRepository.existsById(id)) {
+            recipe.setId(id);
+            Recipe updatedRecipe = recipeRepository.save(recipe);
+            return ResponseEntity.ok(updatedRecipe);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteRecipe(@PathVariable Long id) {
+        if (recipeRepository.existsById(id)) {
+            recipeRepository.deleteById(id);
+            return ResponseEntity.noContent().build();
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+}
+
+(In dit voorbeeld definieert de RecipeController verschillende HTTP-eindpunten om CRUD-operaties op recepten uit te voeren. Hier zijn enkele belangrijke punten:
+
+    @RestController geeft aan dat dit een controller is die JSON-responsen retourneert.
+    @RequestMapping("/recipes") specificeert het basismappingpad voor alle eindpunten in deze controller.
+    De @Autowired-annotatie injecteert de RecipeRepository in de controller.
+    @GetMapping definieert een eindpunt om alle recepten op te halen.
+    @PostMapping definieert een eindpunt om een nieuw recept te maken.
+    @PutMapping definieert een eindpunt om een bestaand recept bij te werken.
+    @DeleteMapping definieert een eindpunt om een recept te verwijderen.
+    @PathVariable wordt gebruikt om variabelen uit het pad van de URL te extraheren.
+    @RequestBody wordt gebruikt om het verzoeklichaam naar een object te binden.
+
+Houd er rekening mee dat dit slechts een basisvoorbeeld is en je kunt dit aanpassen en uitbreiden op basis van de vereisten van je applicatie.)
 
 
 2. Frontend met React, JavaScript, en Tailwind:
