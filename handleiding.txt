@@ -276,7 +276,6 @@ teruggeeft
         return ResponseEntity.ok("hello recipes!");
     }
 --------------------------------------------------------------------------------------------------------------------------
-
 9) Run het project en test uit in de browser of je het endpoint terugkrijgt
 
 - ga naar MiniRecipesAppApplication in IntelliJ
@@ -290,7 +289,50 @@ en achter @GetMapping staat het tweede gedeelte("/hello"))
 
 --------------------------------------------------------------------------------------------------------------------------
 
-10) Maak een seeder voor je database, die er recepten in aanbrengt als hij leeg is
+10) Maak een seeder voor je database, die er recepten in aanbrengt als hij leeg is.
+11) Seed je database met 2 recepten
+
+- ga in IntelliJ naar minirecipesapp\src\main\java\com\jannedekraker\minirecipesapp\MiniRecipesAppApplication.java
+- rechtermuisknop new file java class
+- DatabaseSeeder
+- add to git
+- typ dit:
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+import java.util.List;
+
+@Configuration
+public class DatabaseSeeder {
+
+    @Bean
+    public CommandLineRunner initDatabase(RecipeRepository recipeRepository) {
+        return args -> {
+            if (recipeRepository.count() == 0) {
+                seedDatabase(recipeRepository);
+            }
+        };
+    }
+
+    private void seedDatabase(RecipeRepository recipeRepository) {
+        Recipe recipe1 = new Recipe("Pasta Carbonara");
+        Recipe recipe2 = new Recipe("Chocolate Cake");
+
+        recipeRepository.saveAll(List.of(recipe1, recipe2));
+    }
+}
+
+(In dit voorbeeld gebruiken we Spring's CommandLineRunner-interface om een methode uit te voeren nadat de Spring Boot-applicatie is gestart. De initDatabase-methode controleert of de database leeg is door te kijken naar het aantal recepten in de database. Als de database leeg is, wordt de seedDatabase-methode aangeroepen om een paar recepten toe te voegen aan de database met behulp van de RecipeRepository.
+
+De seedDatabase-methode creëert een paar recepten en gebruikt de saveAll-methode van het RecipeRepository om ze aan de database toe te voegen.
+
+Houd er rekening mee dat je deze klasse in hetzelfde package moet plaatsen als je hoofdtoepassingsklasse (de klasse die is gemarkeerd met @SpringBootApplication). Spring Boot zal automatisch componenten in hetzelfde package scannen en initialiseren.)
+
+- ga naar pgAdmin
+-Servers-> PostgresSQL->databases-> recipes-> Schemas-> public -> Tables -> recipe-> rechtermuisknop -> View/Edit Data -> All Rows
+- de twee recepten moeten nu in de database te zien zijn
+--------------------------------------------------------------------------------------------------------------------------
 
 
 
