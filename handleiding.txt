@@ -88,7 +88,7 @@ C:\Users\janne.dekraker\Documents\it project janne\Itvitae\opdrachtenfase3
 3) Maak een database (bv "recipes") met pgAdmin
 
 - open pgAdmin
-- enter wachtwoord (db)
+- enter wachtwoord
 - klik op servers
 - klik op postgresSQL
 - rechtermuisknop databases --> create Database
