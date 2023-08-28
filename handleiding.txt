@@ -117,6 +117,83 @@ spring.jpa.hibernate.ddl-auto = update
 - zet bij commit message: added application.properties to .gitignore
 - commit
 
+--------------------------------------------------------------------------------------------------------------------------
+
+5) Maak een Recipe class - dit is een entity class. Geef het een id en title
+
+- ga in IntelliJ naar minirecipesapp\src\main\java\com\jannedekraker\minirecipesapp\MiniRecipesAppApplication.java
+- rechtermuisknop new file java class
+- Recipe
+- add to git
+- typ dit (de constructors en getters en setters kan je laten generaten:
+
+package com.jannedekraker.minirecipesapp;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+
+@Entity
+
+public class Recipe {
+    @Id
+    @GeneratedValue
+    private long id;
+
+    private String title;
+
+          public Recipe() {
+          }
+
+          public Recipe(String title) {
+    this.title = title;
+         }
+
+
+    public long getId() {
+        return id;
+    }
+
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+}
+
+- commit
+
+(In dit voorbeeld is Recipe een JPA-entityklasse, gemarkeerd met de @Entity-annotatie. Dit vertelt Spring dat deze klasse overeenkomt met een database-entiteit. De @Id-annotatie geeft aan dat het veld id de primaire sleutel van de entiteit is, en de @GeneratedValue-annotatie geeft aan dat de database automatisch unieke id's zal genereren.
+
+Je kunt deze klasse uitbreiden met andere eigenschappen zoals ingrediënten, instructies, enzovoort, afhankelijk van wat je in je receptenapp wilt opslaan.)
+--------------------------------------------------------------------------------------------------------------------------
+
+
+6) Maak een RecipeRepository
+- ga in IntelliJ naar minirecipesapp\src\main\java\com\jannedekraker\minirecipesapp\MiniRecipesAppApplication.java
+- rechtermuisknop new file java interface
+- typ RecipeRepository
+- typ dit:
+
+package com.jannedekraker.minirecipesapp;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+@Repository
+public interface RecipeRepository extends JpaRepository<Recipe, Long> {
+    // Add any custom query methods if needed
+}
+
+(In dit voorbeeld breidt de RecipeRepository het JpaRepository uit, dat wordt geleverd door Spring Data JPA. Hiermee krijg je out-of-the-box CRUD (Create, Read, Update, Delete) operaties en query-ondersteuning zonder dat je veel boilerplate-code hoeft te schrijven.
+
+Je kunt ook aangepaste query-methoden toevoegen aan de repository-interface als je specifieke zoekoperaties nodig hebt die niet worden gedekt door de standaard CRUD-operaties.)
+--------------------------------------------------------------------------------------------------------------------------
+7) Maak een RecipeController
+
 
 2. Frontend met React, JavaScript, en Tailwind:
 tailwind installeren:
