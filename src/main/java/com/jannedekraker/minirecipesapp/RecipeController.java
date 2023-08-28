@@ -16,7 +16,10 @@ public class RecipeController {
     public RecipeController(RecipeRepository recipeRepository) {
         this.recipeRepository = recipeRepository;
     }
-
+    @GetMapping("/hello")
+    public ResponseEntity<String> helloRecipes() {
+        return ResponseEntity.ok("hello recipes!");
+    }
     @GetMapping
     public ResponseEntity<List<Recipe>> getAllRecipes() {
         List<Recipe> recipes = recipeRepository.findAll();
