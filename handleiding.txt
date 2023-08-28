@@ -332,7 +332,41 @@ Houd er rekening mee dat je deze klasse in hetzelfde package moet plaatsen als j
 - ga naar pgAdmin
 -Servers-> PostgresSQL->databases-> recipes-> Schemas-> public -> Tables -> recipe-> rechtermuisknop -> View/Edit Data -> All Rows
 - de twee recepten moeten nu in de database te zien zijn
---------------------------------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------------------------------
+ 12) Maak een endpoint die allebei de recepten teruggeeft
+
+ - die heb ik al gemaakt, dat is deze, die staat in de RecipeController:
+
+
+ @GetMapping
+     public ResponseEntity<List<Recipe>> getAllRecipes() {
+         List<Recipe> recipes = recipeRepository.findAll();
+         return ResponseEntity.ok(recipes);
+     }
+ (In dit voorbeeld voegen we een nieuwe methode getAllRecipes toe die wordt aangeroepen wanneer een GET-verzoek wordt gedaan naar het pad "/recipes". Deze methode haalt alle recepten op uit de database met behulp van de findAll-methode van de RecipeRepository en retourneert ze als een lijst in de respons.
+
+ Wanneer je naar http://localhost:8080/api/v1/recipes gaat in je browser (waarbij de poort en het pad overeenkomen met je configuratie), zal dit eindpunt alle recepten in je database weergeven.)
+ --------------------------------------------------------------------------------------------------------------------------
+ 13) Maak een endpoint die recepten teruggeeft per id
+
+ - die heb ik al gemaakt, dat is deze, die staat in de RecipeController:
+
+ @GetMapping("/{id}")
+ public ResponseEntity<Recipe> getRecipeById(@PathVariable Long id) {
+     Recipe recipe = recipeRepository.findById(id).orElse(null);
+     if (recipe != null) {
+         return ResponseEntity.ok(recipe);
+     } else {
+         return ResponseEntity.notFound().build();
+     }
+ }
+
+ (In dit voorbeeld voegen we een nieuwe methode getRecipeById toe die wordt aangeroepen wanneer een GET-verzoek wordt gedaan naar het pad "/recipes/{id}". Hierbij wordt {id} vervangen door het daadwerkelijke ID van het recept dat je wilt ophalen.
+
+ De methode haalt het recept op met het opgegeven ID door de findById-methode van de RecipeRepository te gebruiken. Als het recept bestaat, wordt het teruggegeven in de respons met een status 200 (OK). Als het recept niet wordt gevonden, wordt een 404 (Not Found) statusrespons geretourneerd.
+
+ Je kunt nu naar bijvoorbeeld http://localhost:8080/api/v1/recipes/52 gaan in je browser om het recept met ID 1 op te halen (vervang 52 door het gewenste ID).)
+ --------------------------------------------------------------------------------------------------------------------------
 
 
 
