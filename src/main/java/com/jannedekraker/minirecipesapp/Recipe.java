@@ -13,6 +13,13 @@ public class Recipe {
 
     private String title;
 
+    public Recipe() {
+    }
+
+    public Recipe(String title) {
+        this.title = title;
+    }
+
     public long getId() {
         return id;
     }
