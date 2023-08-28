@@ -39,17 +39,6 @@ public class RecipeController {
         return ResponseEntity.ok(savedRecipe);
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<Recipe> updateRecipe(@PathVariable Long id, @RequestBody Recipe recipe) {
-        if (recipeRepository.existsById(id)) {
-            recipe.setId(id);
-            Recipe updatedRecipe = recipeRepository.save(recipe);
-            return ResponseEntity.ok(updatedRecipe);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
-    }
-
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteRecipe(@PathVariable Long id) {
         if (recipeRepository.existsById(id)) {
