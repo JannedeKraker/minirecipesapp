@@ -402,9 +402,50 @@ Houd er rekening mee dat je deze klasse in hetzelfde package moet plaatsen als j
  - ga naar pgAdmin
  - Servers-> PostgresSQL->databases-> recipes-> Schemas-> public -> Tables -> recipe-> rechtermuisknop -> View/Edit Data -> All Rows
  --------------------------------------------------------------------------------------------------------------------------
- 15) Maak nu een vite/React/JS+SWC-project voor de front-end (dit mag in je Java-
- folder; je mag ook de Java-folder en de React-folder op gelijk niveau zetten, maar dat
- levert in mijn ervaring meer gepruts op tot het goed werkt)
+15) Maak nu een vite/React/JS+SWC-project voor de front-end (dit mag in je Java-
+folder; je mag ook de Java-folder en de React-folder op gelijk niveau zetten, maar dat
+levert in mijn ervaring meer gepruts op tot het goed werkt)
+
+(In de context van de zin "maak nu een Vite/React/JS+SWC-project," verwijst "SWC" naar een JavaScript/TypeScript-transpiler. SWC staat voor "Super fast Webpack/Babel Compiler" en is een tool die wordt gebruikt om JavaScript- en TypeScript-code om te zetten van moderne, geavanceerde syntax naar oudere syntax die door oudere browsers begrepen wordt. Het doel van SWC is om dit conversieproces te versnellen en de prestaties van de code te verbeteren in vergelijking met andere transpilers zoals Babel. Het wordt vaak gebruikt in combinatie met andere tools zoals Vite (een snelle build tool) en React (een JavaScript-bibliotheek voor het bouwen van gebruikersinterfaces).)
+
+- ga naar de map waar het project in staat via windows verkenner. in dit geval: C:\Users\janne.dekraker\Documents\it project janne\Itvitae\opdrachtenfase3\minirecipesapp
+- klik op de adresbalk en typ cmd en enter.
+- typ in de commandline : npm create vite@latest
+- projectname: frontend
+- kies React
+- kies javascript +SWC
+- open Visual studio code
+- open folder in VSC: minirecipesapp
+- open new terminal
+- typ cd frontend
+- npm install
+voor als je ook Tailwindcss wil gebruiken (dat wil ik)
+- npm install -D tailwindcss postcss autoprefixer
+- npx tailwindcss init -p
+- plak de volgende code in je tailwind.config.js file in plaat van content: [], :
+  content: [
+    "./index.html",
+    "./src/**/*.{js,ts,jsx,tsx}",
+  ],
+- ga naar index.html en zet dit er boven aan in:
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+- typ dan in de terminal in VSC : npm run dev
+- verwijder bij app.jsx bijna alles, dat alleen dit er nog staat:
+
+import React from "react";
+function App() {
+  return (
+    <>
+      <div></div>
+    </>
+  );
+}
+
+export default App;
+-verwijder App.css helemaal
+-verwijder Index.css helemaal
 
 
 
