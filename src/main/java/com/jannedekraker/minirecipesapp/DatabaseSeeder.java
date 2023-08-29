@@ -21,8 +21,9 @@ public class DatabaseSeeder {
     private void seedDatabase(RecipeRepository recipeRepository) {
         Recipe recipe1 = new Recipe("Pasta Carbonara");
         Recipe recipe2 = new Recipe("Chocolate Cake");
+        Recipe recipe3 = new Recipe("Pasta Putanesca");
 
-        recipeRepository.saveAll(List.of(recipe1, recipe2));
+        recipeRepository.saveAll(List.of(recipe1, recipe2, recipe3));
 
     }
 }
