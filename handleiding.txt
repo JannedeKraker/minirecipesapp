@@ -81,14 +81,14 @@ C:\Users\janne.dekraker\Documents\it project janne\Itvitae\opdrachtenfase3
 - hij staat standaard op private, dat wil ik nu niet omdat wubbo dan kan zien wat ik heb gedaan. dus ik haal het vinkje weg bij private.
 - Repository naam staat er automatisch,
 - description kopieer ik van initializer.
-- bij de add files for initial commit unvink de application.properties.
+- bij de add files for initial commit uitvinken de application.properties.
 - klik --> commit
 --------------------------------------------------------------------------------------------------------------------------
 
 3) Maak een database (bv "recipes") met pgAdmin
 
 - open pgAdmin
-- enter wachtwoord
+- enter wachtwoord (db)
 - klik op servers
 - klik op postgresSQL
 - rechtermuisknop databases --> create Database
@@ -100,7 +100,7 @@ C:\Users\janne.dekraker\Documents\it project janne\Itvitae\opdrachtenfase3
 4) Zorg dat de application.properties de juiste waarden krijgt.
 
 - ga naar InteliJ
-- ga naar minirecepesapp->src->main->resources->application.properties
+- ga naar minirecipesapp->src->main->resources->application.properties
 - zet dit er in (gekregen van Alexander, geen idee waar hij dit vandaan heeft, ik vermoed dat dit de connectie met postgres voor elkaar krijgt):
 
 spring.datasource.url=jdbc:postgresql://localhost:5432/{*** vul hier de naam van je database in***}
@@ -176,6 +176,7 @@ Je kunt deze klasse uitbreiden met andere eigenschappen zoals ingrediënten, ins
 - ga in IntelliJ naar minirecipesapp\src\main\java\com\jannedekraker\minirecipesapp\MiniRecipesAppApplication.java
 - rechtermuisknop new file java interface
 - typ RecipeRepository
+- add to git
 - typ dit:
 
 package com.jannedekraker.minirecipesapp;
@@ -207,6 +208,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@CrossOrigin
 @RequestMapping("api/v1/recipes")
 public class RecipeController {
 
@@ -275,7 +277,10 @@ teruggeeft
     public ResponseEntity<String> helloRecipes() {
         return ResponseEntity.ok("hello recipes!");
     }
+
+(Hier voeg ik een nieuw GET-eindpunt toe met het pad "/hello". Wanneer je dit pad in je browser opent of een GET-verzoek naar maakt, zal het "hello recipes!" als respons teruggeven. Dit is een eenvoudige manier om te controleren of je eindpunten correct worden aangeroepen. Vergeet niet om de andere eindpunten die je eerder hebt gedefinieerd te behouden.)
 --------------------------------------------------------------------------------------------------------------------------
+
 9) Run het project en test uit in de browser of je het endpoint terugkrijgt
 
 - ga naar MiniRecipesAppApplication in IntelliJ
@@ -332,76 +337,76 @@ Houd er rekening mee dat je deze klasse in hetzelfde package moet plaatsen als j
 - ga naar pgAdmin
 -Servers-> PostgresSQL->databases-> recipes-> Schemas-> public -> Tables -> recipe-> rechtermuisknop -> View/Edit Data -> All Rows
 - de twee recepten moeten nu in de database te zien zijn
----------------------------------------------------------------------------------------------------------------------------
- 12) Maak een endpoint die allebei de recepten teruggeeft
+--------------------------------------------------------------------------------------------------------------------------
+12) Maak een endpoint die allebei de recepten teruggeeft
 
- - die heb ik al gemaakt, dat is deze, die staat in de RecipeController:
+- die heb ik al gemaakt, dat is deze, die staat in de RecipeController:
 
 
- @GetMapping
-     public ResponseEntity<List<Recipe>> getAllRecipes() {
-         List<Recipe> recipes = recipeRepository.findAll();
-         return ResponseEntity.ok(recipes);
-     }
- (In dit voorbeeld voegen we een nieuwe methode getAllRecipes toe die wordt aangeroepen wanneer een GET-verzoek wordt gedaan naar het pad "/recipes". Deze methode haalt alle recepten op uit de database met behulp van de findAll-methode van de RecipeRepository en retourneert ze als een lijst in de respons.
+@GetMapping
+    public ResponseEntity<List<Recipe>> getAllRecipes() {
+        List<Recipe> recipes = recipeRepository.findAll();
+        return ResponseEntity.ok(recipes);
+    }
+(In dit voorbeeld voegen we een nieuwe methode getAllRecipes toe die wordt aangeroepen wanneer een GET-verzoek wordt gedaan naar het pad "/recipes". Deze methode haalt alle recepten op uit de database met behulp van de findAll-methode van de RecipeRepository en retourneert ze als een lijst in de respons.
 
- Wanneer je naar http://localhost:8080/api/v1/recipes gaat in je browser (waarbij de poort en het pad overeenkomen met je configuratie), zal dit eindpunt alle recepten in je database weergeven.)
- --------------------------------------------------------------------------------------------------------------------------
- 13) Maak een endpoint die recepten teruggeeft per id
+Wanneer je naar http://localhost:8080/api/v1/recipes gaat in je browser (waarbij de poort en het pad overeenkomen met je configuratie), zal dit eindpunt alle recepten in je database weergeven.)
+--------------------------------------------------------------------------------------------------------------------------
+13) Maak een endpoint die recepten teruggeeft per id
 
- - die heb ik al gemaakt, dat is deze, die staat in de RecipeController:
+- die heb ik al gemaakt, dat is deze, die staat in de RecipeController:
 
- @GetMapping("/{id}")
- public ResponseEntity<Recipe> getRecipeById(@PathVariable Long id) {
-     Recipe recipe = recipeRepository.findById(id).orElse(null);
-     if (recipe != null) {
-         return ResponseEntity.ok(recipe);
-     } else {
-         return ResponseEntity.notFound().build();
-     }
- }
+@GetMapping("/{id}")
+public ResponseEntity<Recipe> getRecipeById(@PathVariable Long id) {
+    Recipe recipe = recipeRepository.findById(id).orElse(null);
+    if (recipe != null) {
+        return ResponseEntity.ok(recipe);
+    } else {
+        return ResponseEntity.notFound().build();
+    }
+}
 
- (In dit voorbeeld voegen we een nieuwe methode getRecipeById toe die wordt aangeroepen wanneer een GET-verzoek wordt gedaan naar het pad "/recipes/{id}". Hierbij wordt {id} vervangen door het daadwerkelijke ID van het recept dat je wilt ophalen.
+(In dit voorbeeld voegen we een nieuwe methode getRecipeById toe die wordt aangeroepen wanneer een GET-verzoek wordt gedaan naar het pad "/recipes/{id}". Hierbij wordt {id} vervangen door het daadwerkelijke ID van het recept dat je wilt ophalen.
 
- De methode haalt het recept op met het opgegeven ID door de findById-methode van de RecipeRepository te gebruiken. Als het recept bestaat, wordt het teruggegeven in de respons met een status 200 (OK). Als het recept niet wordt gevonden, wordt een 404 (Not Found) statusrespons geretourneerd.
+De methode haalt het recept op met het opgegeven ID door de findById-methode van de RecipeRepository te gebruiken. Als het recept bestaat, wordt het teruggegeven in de respons met een status 200 (OK). Als het recept niet wordt gevonden, wordt een 404 (Not Found) statusrespons geretourneerd.
 
- Je kunt nu naar bijvoorbeeld http://localhost:8080/api/v1/recipes/52 gaan in je browser om het recept met ID 1 op te halen (vervang 52 door het gewenste ID).)
- --------------------------------------------------------------------------------------------------------------------------
- 14) Maak een endpoint waarmee je een receptennaam kunt opslaan via Postman of HTTPie
+Je kunt nu naar bijvoorbeeld http://localhost:8080/api/v1/recipes/52 gaan in je browser om het recept met ID 1 op te halen (vervang 52 door het gewenste ID).)
+--------------------------------------------------------------------------------------------------------------------------
+14) Maak een endpoint waarmee je een receptennaam kunt opslaan via Postman of HTTPie
 
- - die heb ik al gemaakt, dat is deze, die staat in de RecipeController:
+- die heb ik al gemaakt, dat is deze, die staat in de RecipeController:
 
-  @PostMapping
-     public ResponseEntity<Recipe> createRecipe(@RequestBody Recipe recipe) {
-         Recipe savedRecipe = recipeRepository.save(recipe);
-         return ResponseEntity.ok(savedRecipe);
-     }
+ @PostMapping
+    public ResponseEntity<Recipe> createRecipe(@RequestBody Recipe recipe) {
+        Recipe savedRecipe = recipeRepository.save(recipe);
+        return ResponseEntity.ok(savedRecipe);
+    }
 
- (In dit voorbeeld voegen we een nieuwe methode createRecipe toe die wordt aangeroepen wanneer een POST-verzoek wordt gedaan naar het pad "/recipes". Het verzoeklichaam (request body) moet een JSON-object bevatten met de eigenschappen van het recept dat je wilt opslaan, bijvoorbeeld:
+(In dit voorbeeld voegen we een nieuwe methode createRecipe toe die wordt aangeroepen wanneer een POST-verzoek wordt gedaan naar het pad "/recipes". Het verzoeklichaam (request body) moet een JSON-object bevatten met de eigenschappen van het recept dat je wilt opslaan, bijvoorbeeld:
 
- {
-     "title": "New Recipe"
- }
+{
+    "title": "New Recipe"
+}
 
- Met behulp van Postman of HTTPie kun je een POST-verzoek doen naar http://localhost:8080/api/v1/recipes en het bovenstaande JSON-object als verzoeklichaam verzenden. Het recept wordt opgeslagen in de database en het opgeslagen recept wordt als respons teruggestuurd.
+Met behulp van Postman of HTTPie kun je een POST-verzoek doen naar http://localhost:8080/api/v1/recipes en het bovenstaande JSON-object als verzoeklichaam verzenden. Het recept wordt opgeslagen in de database en het opgeslagen recept wordt als respons teruggestuurd.
 
- Houd er rekening mee dat dit een eenvoudige implementatie is om je op weg te helpen. In een productieomgeving wil je mogelijk meer validatie en gegevensverwerking toevoegen aan het opslaan van recepten.
- )
+Houd er rekening mee dat dit een eenvoudige implementatie is om je op weg te helpen. In een productieomgeving wil je mogelijk meer validatie en gegevensverwerking toevoegen aan het opslaan van recepten.
+)
 
- - open HTTPie
- - zet bij Post: http://localhost:8080/api/v1/recipes
- - zet bij Body:
- {
-     "title": "Strawberry Cheesecake with Bastogne"
- }
- - klik op Send
+- open HTTPie
+- zet bij Post: http://localhost:8080/api/v1/recipes
+- zet bij Body:
+{
+    "title": "Strawberry Cheesecake with Bastogne"
+}
+- klik op Send
 
- om te kijken of het werkt:
- - kijk op http://localhost:8080/api/v1/recipes/ (id nummer die te zien is bij HTTPie)
- - kijk op http://localhost:8080/api/v1/recipes dan zie je ze allemaal staan
- - ga naar pgAdmin
- - Servers-> PostgresSQL->databases-> recipes-> Schemas-> public -> Tables -> recipe-> rechtermuisknop -> View/Edit Data -> All Rows
- --------------------------------------------------------------------------------------------------------------------------
+om te kijken of het werkt:
+- kijk op http://localhost:8080/api/v1/recipes/ (id nummer die te zien is bij HTTPie)
+- kijk op http://localhost:8080/api/v1/recipes dan zie je ze allemaal staan
+- ga naar pgAdmin
+- Servers-> PostgresSQL->databases-> recipes-> Schemas-> public -> Tables -> recipe-> rechtermuisknop -> View/Edit Data -> All Rows
+--------------------------------------------------------------------------------------------------------------------------
 15) Maak nu een vite/React/JS+SWC-project voor de front-end (dit mag in je Java-
 folder; je mag ook de Java-folder en de React-folder op gelijk niveau zetten, maar dat
 levert in mijn ervaring meer gepruts op tot het goed werkt)
@@ -423,29 +428,131 @@ voor als je ook Tailwindcss wil gebruiken (dat wil ik)
 - npm install -D tailwindcss postcss autoprefixer
 - npx tailwindcss init -p
 - plak de volgende code in je tailwind.config.js file in plaat van content: [], :
-  content: [
-    "./index.html",
-    "./src/**/*.{js,ts,jsx,tsx}",
-  ],
-- ga naar index.html en zet dit er boven aan in:
+  content: ["./src/**/*.{js,html,jsx}"],
+- ga naar ./src/index.css en zet dit er in, inplaats van alles:
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 - typ dan in de terminal in VSC : npm run dev
-- verwijder bij app.jsx bijna alles, dat alleen dit er nog staat:
+- verwijder bij app.jsx alles, en zet dit er in:
 
-import React from "react";
-function App() {
+
+export default function App() {
   return (
     <>
-      <div></div>
+      <div className="bg-gray-100 min-h-screen flex items-center justify-center">
+        <div className="bg-white p-8 rounded shadow-md">
+          <h1 className="text-2xl font-semibold mb-4">
+            Welcome to My Tailwind App
+          </h1>
+          <p className="text-gray-700">
+            This is an example of a React app styled using Tailwind CSS.
+          </p>
+          <button className="mt-4 bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600">
+            Click me
+          </button>
+        </div>
+      </div>
+    </>
+  );
+}
+-verwijder App.css helemaal
+
+--------------------------------------------------------------------------------------------------------------------------
+
+16) Test in de browser of dat React-project werkt
+
+- npm install --save-dev eslint-plugin-reac
+- open http://localhost:5173/ of een andere. dat staat aangegeven in de terminal.
+als je dan dit ziet staan: Welcome to my tailwind App. dan doet hij het.
+- import React from "react"; - als er een warning onderstaat zoals: 'React' is defined but never used.eslintno-unused-vars.
+kan je die regel weghalen, maar je hoeft je er niks van aan te trekken. je gebruikt wel react maar het gaat om bepaalde methodes die je dan van react niet gebruikt.
+- je kan in index.html de naam van je pagina veranderen. dat verandert dan in je tabblad.
+- en je kan de icon van vite weghalen
+--------------------------------------------------------------------------------------------------------------------------
+
+17) Verander nu de hoofdpagina in een pagina die alle recepten laat zien van het alle
+recepten endpoint van punt 12
+- open vsc een nieuwe terminal
+- cd frontend
+- npm install axios
+- maak een map components in de frontend.src
+- maak daar in een RecipeList.jsx file
+- zet dit er in:
+
+import { useState, useEffect } from "react";
+
+function RecipeList() {
+  const [data, setData] = useState([]);
+
+  async function fetchData() {
+    try {
+      const response = await fetch("http://localhost:8080/api/v1/recipes");
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      const jsonData = await response.json();
+      setData(jsonData);
+    } catch (error) {
+      console.error("There was a problem with the fetch operation:", error);
+    }
+  }
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  return (
+    <div>
+      <h1>Recipes:</h1>
+      <ul>
+        {data.map((recipe) => (
+          <li key={recipe.id}>{recipe.title}</li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
+export default RecipeList;
+
+
+- zet in app.jsx
+import RecipeList from './RecipeList';
+- en voeg dit component toe bij return:<RecipeList />
+- haal alles weg bij app.jsx en zet dit er in:
+
+import RecipeList from "./components/RecipeList";
+export default function App() {
+  return (
+    <>
+      <RecipeList />
     </>
   );
 }
 
-export default App;
--verwijder App.css helemaal
--verwijder Index.css helemaal
+- in plaats van de onopgemaakte list in RecipeList.jsx heb ik chat gpt een tailwindcss opmaak laten toevoegen. als je dat ook wil kan je deze code in RecipeList.jsx zetten in plaats van de vorige return:
+ return (
+    <div className="bg-gray-100 min-h-screen p-8">
+      <h1 className="text-2xl font-semibold mb-4">Recipes:</h1>
+      <ul className="space-y-4">
+        {data.map((recipe) => (
+          <li
+            key={recipe.id}
+            className="bg-white p-4 rounded shadow-md"
+          >
+            <h2 className="text-lg font-semibold">{recipe.title}</h2>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+
+
+25) Voeg nu in je Spring een RecipeIngredient-entity-klasse toe, die verwijst naar een
+Ingredient. Ook heeft het een quantity (een getal) en een unit (een String, enum mag
+ook, want je hebt g, l, ml, theelepel, stuk(ken)...)
+(van deze pagina heeft jorrit het geleerd: https://www.baeldung.com/learn-jpa-hibernate)
 
 
 
@@ -454,3 +561,5 @@ export default App;
 2. Frontend met React, JavaScript, en Tailwind:
 tailwind installeren:
 https://tailwindcss.com/docs/guides/vite
+
+

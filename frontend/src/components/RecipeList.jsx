@@ -21,11 +21,13 @@ function RecipeList() {
   }, []);
 
   return (
-    <div>
-      <h1>Data List</h1>
-      <ul>
-        {data.map((item) => (
-          <li key={item.id}>{item.name}</li>
+    <div className="bg-gray-100 min-h-screen p-8">
+      <h1 className="text-2xl font-semibold mb-4">Recipes:</h1>
+      <ul className="space-y-4">
+        {data.map((recipe) => (
+          <li key={recipe.id} className="bg-white p-4 rounded shadow-md">
+            <h2 className="text-lg font-semibold">{recipe.title}</h2>
+          </li>
         ))}
       </ul>
     </div>
